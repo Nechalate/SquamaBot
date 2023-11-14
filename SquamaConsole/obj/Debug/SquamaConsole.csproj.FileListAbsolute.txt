@@ -1,0 +1,14 @@
+D:\PetProjects\SquamaConsole\SquamaConsole\SquamaConsole\bin\Debug\SquamaConsole.exe.config
+D:\PetProjects\SquamaConsole\SquamaConsole\SquamaConsole\bin\Debug\SquamaConsole.exe
+D:\PetProjects\SquamaConsole\SquamaConsole\SquamaConsole\bin\Debug\SquamaConsole.pdb
+D:\PetProjects\SquamaConsole\SquamaConsole\SquamaConsole\obj\Debug\SquamaConsole.csproj.AssemblyReference.cache
+D:\PetProjects\SquamaConsole\SquamaConsole\SquamaConsole\obj\Debug\SquamaConsole.csproj.CoreCompileInputs.cache
+D:\PetProjects\SquamaConsole\SquamaConsole\SquamaConsole\obj\Debug\SquamaConsole.exe
+D:\PetProjects\SquamaConsole\SquamaConsole\SquamaConsole\obj\Debug\SquamaConsole.pdb
+D:\PetProjects\Squama\SquamaConsole\bin\Debug\SquamaConsole.exe.config
+D:\PetProjects\Squama\SquamaConsole\bin\Debug\SquamaConsole.exe
+D:\PetProjects\Squama\SquamaConsole\bin\Debug\SquamaConsole.pdb
+D:\PetProjects\Squama\SquamaConsole\obj\Debug\SquamaConsole.csproj.AssemblyReference.cache
+D:\PetProjects\Squama\SquamaConsole\obj\Debug\SquamaConsole.csproj.CoreCompileInputs.cache
+D:\PetProjects\Squama\SquamaConsole\obj\Debug\SquamaConsole.exe
+D:\PetProjects\Squama\SquamaConsole\obj\Debug\SquamaConsole.pdb
