@@ -36,12 +36,13 @@ namespace SquamaConsole
 
                     if (color.ToString() == "Color [A=255, R=255, G=0, B=0]")
                     {
-                    Console.WriteLine("Рыбка клюет!");
-                    //Console.WriteLine($"Координаты мыши: X={point.pointX}, Y={point.pointY}");
+                        MouseClick.Click(1920, 1080);
+                        Console.WriteLine("Рыбка клюет!");
+                        //Console.WriteLine($"Координаты мыши: X={point.pointX}, Y={point.pointY}");
                     }
                     //Console.WriteLine(color.ToString());
 
-                    Thread.Sleep(500);
+                    Thread.Sleep(100);
                 }
             }
             catch (ThreadAbortException)
