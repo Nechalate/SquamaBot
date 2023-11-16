@@ -12,3 +12,6 @@ D:\PetProjects\Squama\SquamaConsole\obj\Debug\SquamaConsole.csproj.AssemblyRefer
 D:\PetProjects\Squama\SquamaConsole\obj\Debug\SquamaConsole.csproj.CoreCompileInputs.cache
 D:\PetProjects\Squama\SquamaConsole\obj\Debug\SquamaConsole.exe
 D:\PetProjects\Squama\SquamaConsole\obj\Debug\SquamaConsole.pdb
+D:\PetProjects\Squama\SquamaConsole\bin\Debug\WindowsInput.dll
+D:\PetProjects\Squama\SquamaConsole\bin\Debug\WindowsInput.xml
+D:\PetProjects\Squama\SquamaConsole\obj\Debug\SquamaConsole.csproj.CopyComplete
