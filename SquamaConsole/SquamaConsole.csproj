@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColorTaker.cs" />
     <Compile Include="MouseClick.cs" />
     <Compile Include="Pointer.cs" />
     <Compile Include="Program.cs" />
