@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace SquamaConsole
 {
@@ -7,13 +8,21 @@ namespace SquamaConsole
     {
         static void Main(string[] args)
         {
+
             Thread mouseTrackingThread = new Thread(Pointer.MouseTrackingThread);
+
             mouseTrackingThread.Start();
 
-            Console.WriteLine("Нажмите любую клавишу для выхода.");
-            Console.ReadKey();
+            Console.WriteLine("Нажмите клавишу для приостановки/возобновления выполнения программы.");
 
-            mouseTrackingThread.Abort();
+            while (true)
+            {
+                if (Console.KeyAvailable)
+                {
+                    Console.ReadKey(true);
+                    Pointer.TogglePause();
+                }
+            }
         }
     }
 }
