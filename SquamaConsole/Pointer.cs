@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -59,8 +60,6 @@ namespace SquamaConsole
                     if (color.ToString() == "Color [A=255, R=255, G=0, B=0]")
                     {
                         MouseClick.Click(1920, 1080);
-                        //Console.WriteLine("Рыбка клюет!");
-                        //Console.WriteLine($"Координаты мыши: X={point.pointX}, Y={point.pointY}");
                     }
                     if (colorGrab.ToString() == "Color [A=255, R=148, G=248, B=7]")
                     {
@@ -72,9 +71,6 @@ namespace SquamaConsole
                     {
                         Console.WriteLine("Капча");
                     }
-                    //Console.WriteLine(colorCaptcha.ToString());
-
-                    //Console.WriteLine($"Координаты мыши: X={point.pointX}, Y={point.pointY}");
 
                     Thread.Sleep(100);
                 }
