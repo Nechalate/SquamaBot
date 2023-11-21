@@ -56,6 +56,8 @@ namespace SquamaConsole
                     var colorGrab = ColorTaker.GetColorAt(new System.Drawing.Point(661, 1019));
                     var colorCaptcha = ColorTaker.GetColorAt(new System.Drawing.Point(1162, 594));
 
+                    Console.WriteLine($"{point.pointX}, {point.pointY}");
+
                     if (color.ToString() == "Color [A=255, R=255, G=0, B=0]")
                     {
                         MouseClick.Click(1920, 1080);
