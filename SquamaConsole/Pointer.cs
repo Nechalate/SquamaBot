@@ -56,7 +56,7 @@ namespace SquamaConsole
                     var colorGrab = ColorTaker.GetColorAt(new System.Drawing.Point(661, 1019));
                     var colorCaptcha = ColorTaker.GetColorAt(new System.Drawing.Point(1162, 594));
 
-                    Console.WriteLine($"{point.pointX}, {point.pointY}");
+                    //Console.WriteLine($"{point.pointX}, {point.pointY}");
 
                     if (color.ToString() == "Color [A=255, R=255, G=0, B=0]")
                     {
@@ -71,10 +71,13 @@ namespace SquamaConsole
                     if (colorCaptcha.ToString() == "Color [A=255, R=29, G=38, B=52]")
                     {
                         Console.Beep();
+                        Bitmap captchaImage = Captcha.CaptureCaptchaArea(861, 456, 197, 48);
+                        string captchaText = Captcha.RecognizeCaptcha(captchaImage);
+                        Console.WriteLine($"Распознанный текст капчи: {captchaText}");
                         Thread.Sleep(10000);
                     }
 
-                    Thread.Sleep(100);
+                    Thread.Sleep(50);
                 }
             }
             catch (ThreadAbortException)
