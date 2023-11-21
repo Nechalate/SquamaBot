@@ -5,9 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tesseract;
-using Emgu.CV;
-using Emgu.CV.CvEnum;
-using Emgu.CV.Structure;
 
 namespace SquamaConsole
 {
@@ -15,8 +12,7 @@ namespace SquamaConsole
     {
         public static string RecognizeCaptcha(Bitmap captchaImage)
         {
-            // Распознавание текста с использованием Tesseract
-            using (var engine = new TesseractEngine(@"D:\\PetProjects\\Squama\\traineddata", "eng", EngineMode.Default))
+            using (var engine = new TesseractEngine(@"\\traineddata", "eng", EngineMode.Default))
             {
                 engine.SetVariable("tessedit_char_whitelist", "0123456789");
 
@@ -26,6 +22,9 @@ namespace SquamaConsole
                     //image.ContrastStretch();
                     //image.RemoveSaltAndPepperNoise();
                     //image.Smooth(3);
+                    //Bitmap captchaImage = Captcha.CaptureCaptchaArea(861, 456, 197, 48);
+                    //string captchaText = Captcha.RecognizeCaptcha(captchaImage);
+                    //Console.WriteLine($"Распознанный текст капчи: {captchaText}");
 
                     using (var page = engine.Process(image))
                     {

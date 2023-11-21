@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Threading;
-using System.Windows.Forms;
 
 namespace SquamaConsole
 {
@@ -54,9 +51,7 @@ namespace SquamaConsole
 
                     var color = ColorTaker.GetColorAt(new System.Drawing.Point(1052, 899));
                     var colorGrab = ColorTaker.GetColorAt(new System.Drawing.Point(661, 1019));
-                    var colorCaptcha = ColorTaker.GetColorAt(new System.Drawing.Point(1162, 594));
-
-                    //Console.WriteLine($"{point.pointX}, {point.pointY}");
+                    var colorCaptcha = ColorTaker.GetColorAt(new System.Drawing.Point(912, 605));
 
                     if (color.ToString() == "Color [A=255, R=255, G=0, B=0]")
                     {
@@ -68,12 +63,9 @@ namespace SquamaConsole
                         KeyboardPress.RodPut();
                         Thread.Sleep(5000);
                     }
-                    if (colorCaptcha.ToString() == "Color [A=255, R=29, G=38, B=52]")
+                    if (colorCaptcha.ToString() == "Color [A=255, R=51, G=219, B=42]")
                     {
                         Console.Beep();
-                        Bitmap captchaImage = Captcha.CaptureCaptchaArea(861, 456, 197, 48);
-                        string captchaText = Captcha.RecognizeCaptcha(captchaImage);
-                        Console.WriteLine($"Распознанный текст капчи: {captchaText}");
                         Thread.Sleep(10000);
                     }
 
