@@ -32,7 +32,6 @@ namespace SquamaConsole
                     Monitor.Pulse(lockObject);
                 }
             }
-
             Console.WriteLine(isPaused ? "Программа приостановлена." : "Программа возобновлена.");
         }
 
@@ -69,7 +68,8 @@ namespace SquamaConsole
                     }
                     if (colorCaptcha.ToString() == "Color [A=255, R=29, G=38, B=52]")
                     {
-                        Console.WriteLine("Капча");
+                        Console.Beep();
+                        Thread.Sleep(10000);
                     }
 
                     Thread.Sleep(100);

@@ -15,7 +15,7 @@ namespace SquamaConsole
 
             mouseTrackingThread.Start();
 
-            Console.WriteLine("Нажмите клавишу F5 для приостановки/возобновления выполнения программы.");
+            Console.WriteLine("Нажмите клавишу F5 для приостановки/возобновления выполнения программы.\nНажмите клавишу F6 для очистки консоли");
             
             while (true)
             {
@@ -27,10 +27,14 @@ namespace SquamaConsole
                     {
                         Pointer.TogglePause();
                     }
+                    if (keyInfo.Key == ConsoleKey.F6)
+                    {
+                        Console.Clear();
+                    }
                 }
                 else
                 {
-                    Thread.Sleep(100); // Пауза, чтобы не загружать процессор
+                    Thread.Sleep(100); 
                 }
             }
         }
