@@ -1,32 +1,56 @@
-﻿namespace SquamaConsole
+﻿using System;
+using System.Runtime.InteropServices;
+
+internal class MouseClick
 {
-    internal class MouseClick
+    [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+    private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+    [DllImport("user32.dll")]
+    private static extern bool PostMessage(IntPtr hWnd, uint Msg, int wParam, int lParam);
+
+    private const int WM_LBUTTONDOWN = 0x0201;
+    private const int WM_LBUTTONUP = 0x0202;
+
+    [DllImport("user32.dll")]
+    static extern IntPtr SetForegroundWindow(IntPtr hWnd);
+    [DllImport("user32.dll")]
+    public static extern bool SendMessage(IntPtr hWnd, uint Msg, int wParam, int lParam);
+    [DllImport("user32.dll")]
+    static extern IntPtr FindWindowEx(IntPtr hWnd, string lpClassName, string lpWindowName, string lParam);
+
+    public static void ClickInsideWindow(string windowTitle, int relativeX, int relativeY)
     {
-        [System.Runtime.InteropServices.DllImport("user32.dll",
-        CharSet = System.Runtime.InteropServices.CharSet.Auto,
-        CallingConvention =
-        System.Runtime.InteropServices.CallingConvention.StdCall)]
+        IntPtr windowHandle = FindWindow(null, windowTitle);
 
-        public static extern void mouse_event(uint dwFlags,
-        int dx,
-        int dy,
-        int dwData,
-        int dwExtraInfo);
-
-        private const int MOUSEEVENTF_ABSOLUTE = 0x8000;
-
-        private const int MOUSEEVENTF_LEFTDOWN = 0x0002;
-
-        private const int MOUSEEVENTF_LEFTUP = 0x0004;
-
-        private const int MOUSEEVENTF_MOVE = 0x0001;
-
-        public static void Click(int X, int Y)
+        if (windowHandle != IntPtr.Zero)
         {
-            mouse_event(MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE, 10000, 55000, 0, 0);
-            mouse_event(MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, X, Y, 100, 50);
-            mouse_event(MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE, 55000, 10000, 0, 0);
-            mouse_event(MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, X, Y, 50, 100);
+            RECT windowRect;
+            GetWindowRect(windowHandle, out windowRect);
+
+            int absoluteX = windowRect.Left + relativeX;
+            int absoluteY = windowRect.Top + relativeY;
+
+            SendMessage(windowHandle, WM_LBUTTONDOWN, 0, (absoluteY << 16) | absoluteX);
+            SendMessage(windowHandle, WM_LBUTTONUP, 0, (absoluteY << 16) | absoluteX);
         }
+        else
+        {
+            Console.WriteLine("Окно не найдено.");
+        }
+    }
+
+
+    [DllImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct RECT
+    {
+        public int Left;
+        public int Top;
+        public int Right;
+        public int Bottom;
     }
 }

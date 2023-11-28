@@ -40,3 +40,10 @@ D:\PetProjects\Squama\SquamaConsole\bin\Debug\System.Text.Encodings.Web.xml
 D:\PetProjects\Squama\SquamaConsole\bin\Debug\System.Text.Json.xml
 D:\PetProjects\Squama\SquamaConsole\bin\Debug\System.Threading.Tasks.Extensions.xml
 D:\PetProjects\Squama\SquamaConsole\bin\Debug\System.ValueTuple.xml
+D:\PetProjects\Squama\SquamaConsole\bin\Debug\WindowsInput.dll
+D:\PetProjects\Squama\SquamaConsole\bin\Debug\WindowsInput.xml
+D:\PetProjects\Squama\SquamaConsole\bin\Debug\WindowsInput.pdb
+D:\PetProjects\Squama\SquamaConsole\bin\Debug\AutoItX3.dll
+D:\PetProjects\Squama\SquamaConsole\bin\Debug\AutoItX3_x64.dll
+D:\PetProjects\Squama\SquamaConsole\bin\Debug\AutoItX3.Assembly.dll
+D:\PetProjects\Squama\SquamaConsole\bin\Debug\AutoItX3.Assembly.xml

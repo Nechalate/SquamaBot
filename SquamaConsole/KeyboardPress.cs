@@ -10,16 +10,16 @@ namespace SquamaConsole
 {
     internal class KeyboardPress
     {
-        [DllImport("USER32.DLL", CharSet = CharSet.Unicode)]
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         public static extern IntPtr FindWindow(string lpClassName,
         string lpWindowName);
 
-        [DllImport("USER32.DLL")]
+        [DllImport("user32.dll")]
         public static extern bool SetForegroundWindow(IntPtr hWnd);
 
-        public static void RodPut()
+        public static void RodPut(string windowTitle)
         {
-            IntPtr rageHandle = FindWindow("RAGE Multiplayer Launcher", "RAGE Multiplayer");
+            IntPtr rageHandle = FindWindow(null, windowTitle);
             SetForegroundWindow(rageHandle);
             SendKeys.SendWait("1");
         }
