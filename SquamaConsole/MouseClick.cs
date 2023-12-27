@@ -19,25 +19,18 @@ internal class MouseClick
     [DllImport("user32.dll")]
     static extern IntPtr FindWindowEx(IntPtr hWnd, string lpClassName, string lpWindowName, string lParam);
 
-    public static void ClickInsideWindow(string windowTitle, int relativeX, int relativeY)
+    public static void FishHooking(string windowTitle, int relativeX, int relativeY)
     {
         IntPtr windowHandle = FindWindow(null, windowTitle);
 
-        if (windowHandle != IntPtr.Zero)
-        {
-            RECT windowRect;
-            GetWindowRect(windowHandle, out windowRect);
+        RECT windowRect;
+        GetWindowRect(windowHandle, out windowRect);
 
-            int absoluteX = windowRect.Left + relativeX;
-            int absoluteY = windowRect.Top + relativeY;
+        int absoluteX = windowRect.Left + relativeX;
+        int absoluteY = windowRect.Top + relativeY;
 
-            SendMessage(windowHandle, WM_LBUTTONDOWN, 0, (absoluteY << 16) | absoluteX);
-            SendMessage(windowHandle, WM_LBUTTONUP, 0, (absoluteY << 16) | absoluteX);
-        }
-        else
-        {
-            Console.WriteLine("Окно не найдено.");
-        }
+        SendMessage(windowHandle, WM_LBUTTONDOWN, 0, (absoluteY << 16) | absoluteX);
+        SendMessage(windowHandle, WM_LBUTTONUP, 0, (absoluteY << 16) | absoluteX);
     }
 
 

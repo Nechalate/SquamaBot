@@ -62,9 +62,6 @@ namespace SquamaConsole
             screenshot = Editors.ConvertToBlackAndWhite(screenshot);
             screenshot = Editors.ApplyContrast(screenshot, 50f);
 
-            //string fileName = Path.Combine(directory, $"part.png");
-            //screenshot.Save(fileName, System.Drawing.Imaging.ImageFormat.Png);
-
             return screenshot;
         }
     }

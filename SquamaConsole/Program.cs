@@ -11,9 +11,32 @@ namespace SquamaConsole
 {
     internal class Program
     {
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+        static public string windowTitle = "RАGЕ Мultiрlaуer";
+
         static void Main(string[] args)
         {
-            Thread mouseTrackingThread = new Thread(Pointer.MouseTrackingThread);
+            Thread mouseTrackingThread = new Thread(MainThread.MouseTrackingThread);
+
+            Console.Write("Поиск окна.");
+
+            while (true)
+            {
+                IntPtr windowHandle = FindWindow(null, windowTitle);
+
+                if (windowHandle != IntPtr.Zero)
+                {
+                    Console.WriteLine("Окно найдено.");
+                    break;
+                }
+                else
+                {
+                    windowTitle += " ";
+                    Console.Write(".");
+                }
+            }
 
             mouseTrackingThread.Start();
 
@@ -27,7 +50,7 @@ namespace SquamaConsole
 
                     if (keyInfo.Key == ConsoleKey.F5)
                     {
-                        Pointer.TogglePause();
+                        MainThread.TogglePause();
                     }
                     if (keyInfo.Key == ConsoleKey.F6)
                     {
