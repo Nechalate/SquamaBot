@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Automation;
+using System.Windows.Documents;
 
 namespace SquamaConsole
 {
     internal class MainThread
     {
+        private bool _fishingStop = false;
         public struct POINT
         {
             public int pointX;
@@ -36,7 +39,7 @@ namespace SquamaConsole
             Console.WriteLine(isPaused ? "Программа приостановлена." : "Программа возобновлена.");
         }
 
-        public static void MouseTrackingThread()
+        public static void MainProgramThread()
         {
             try
             {
@@ -86,13 +89,32 @@ namespace SquamaConsole
         private static void CastingFishingRod() // Connected method
         {
             Thread.Sleep(300);
+
             KeyboardPress.PressTheButton(windowTitle, "I"); // Open Inventory
 
-            Thread.Sleep(250);
-            MouseClick.FishHooking(windowTitle, 1492, 287); // Click the rod
+            try
+            {
+                Console.WriteLine(InventorySpaceControl());
 
-            Thread.Sleep(350);
-            MouseClick.FishHooking(windowTitle, 1492, 329); // Click the start fishing
+                if (Convert.ToInt32(InventorySpaceControl()) >= 950)
+                {
+                    Console.Beep();
+                    Console.WriteLine("Инвентарь заполнен.");
+                    TogglePause();
+                }
+                else
+                {
+                    Thread.Sleep(550);
+                    MouseClick.FishHooking(windowTitle, 1492, 287); // Click the rod
+
+                    Thread.Sleep(350);
+                    MouseClick.FishHooking(windowTitle, 1492, 329); // Click the start fishing
+                }
+            }
+            catch (System.FormatException)
+            {
+                InventorySpaceControl();
+            }
 
             Thread.Sleep(5000); // Delay to avoid errors
         }
@@ -111,6 +133,14 @@ namespace SquamaConsole
             }
 
             Thread.Sleep(3000); // Delat to avoid errors
+        }
+
+        private static string InventorySpaceControl() // Checker the space inventory
+        {
+            Bitmap inventorySpaceImage = Captcha.CaptureCaptchaArea(1632, 190, 41, 25); // Area of inventory space
+            string inventoryText = Captcha.RecognizeCaptcha(inventorySpaceImage); // Tesseract work
+
+            return inventoryText;
         }
     }
 }
