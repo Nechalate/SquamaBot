@@ -18,7 +18,7 @@ namespace SquamaConsole
 
         static void Main(string[] args)
         {
-            Thread mouseTrackingThread = new Thread(Pointer.MouseTrackingThread);
+            Thread mouseTrackingThread = new Thread(MainThread.MouseTrackingThread);
 
             Console.Write("Поиск окна.");
 
@@ -50,7 +50,7 @@ namespace SquamaConsole
 
                     if (keyInfo.Key == ConsoleKey.F5)
                     {
-                        Pointer.TogglePause();
+                        MainThread.TogglePause();
                     }
                     if (keyInfo.Key == ConsoleKey.F6)
                     {

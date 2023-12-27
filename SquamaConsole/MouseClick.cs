@@ -19,7 +19,7 @@ internal class MouseClick
     [DllImport("user32.dll")]
     static extern IntPtr FindWindowEx(IntPtr hWnd, string lpClassName, string lpWindowName, string lParam);
 
-    public static void ClickInsideWindow(string windowTitle, int relativeX, int relativeY)
+    public static void FishHooking(string windowTitle, int relativeX, int relativeY)
     {
         IntPtr windowHandle = FindWindow(null, windowTitle);
 

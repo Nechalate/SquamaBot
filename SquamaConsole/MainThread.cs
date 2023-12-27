@@ -6,7 +6,7 @@ using System.Windows.Automation;
 
 namespace SquamaConsole
 {
-    internal class Pointer
+    internal class MainThread
     {
         public struct POINT
         {
@@ -60,36 +60,18 @@ namespace SquamaConsole
                     var color = ColorTaker.GetColorAtInWindow(windowTitle, point1);
                     var colorGrab = ColorTaker.GetColorAtInWindow(windowTitle, point2);
                     var colorCaptcha = ColorTaker.GetColorAtInWindow(windowTitle, point3);
-                    /*
-                    Console.WriteLine($"Color1: {color}");
-                    Console.WriteLine($"Color2: {colorGrab}");
-                    Console.WriteLine($"Color3: {colorCaptcha}");
-                    */
+
                     if (color.ToString() == "Color [A=255, R=255, G=0, B=0]")
                     {
-                        MouseClick.ClickInsideWindow(windowTitle, 50, 900);
+                        MouseClick.FishHooking(windowTitle, 50, 900);
                     }
                     if (colorGrab.ToString() == "Color [A=255, R=148, G=248, B=7]")
                     {
-                        Thread.Sleep(500);
-                        KeyboardPress.RodPut(windowTitle);
-                        Thread.Sleep(5000);
+                        CastingFishingRod();
                     }
                     if (colorCaptcha.ToString() == "Color [A=255, R=51, G=219, B=42]")
                     {
-                        Console.Beep();
-                        Bitmap captchaImage = Captcha.CaptureCaptchaArea(861, 456, 197, 48);
-                        Bitmap[] bit = Captcha.ScreenShotCutter(captchaImage);
-
-                        for (int i = 0; i < 7; i++)
-                        {
-                            string captchaText = Captcha.RecognizeCaptcha(bit[i]);
-                            Console.WriteLine($"Распознанный текст капчи: {captchaText}");
-                        }
-
-                        //string captchaText = Captcha.RecognizeCaptcha(captchaImage);
-                        //Console.WriteLine($"Распознанный текст капчи: {captchaText}");
-                        Thread.Sleep(3000);
+                        CatchTheCaptcha();
                     }
 
                     Thread.Sleep(70);
@@ -97,8 +79,38 @@ namespace SquamaConsole
             }
             catch (ThreadAbortException)
             {
-
+                Console.Write("Error");
             }
+        }
+
+        private static void CastingFishingRod() // Connected method
+        {
+            Thread.Sleep(300);
+            KeyboardPress.PressTheButton(windowTitle, "I"); // Open Inventory
+
+            Thread.Sleep(250);
+            MouseClick.FishHooking(windowTitle, 1492, 287); // Click the rod
+
+            Thread.Sleep(350);
+            MouseClick.FishHooking(windowTitle, 1492, 329); // Click the start fishing
+
+            Thread.Sleep(5000); // Delay to avoid errors
+        }
+
+        private static void CatchTheCaptcha() // Connected method
+        {
+            Console.Beep(); // Sound signal to catch
+
+            Bitmap captchaImage = Captcha.CaptureCaptchaArea(861, 456, 197, 48); // Area of screenshot
+            Bitmap[] bit = Captcha.ScreenShotCutter(captchaImage); // Screenshot slices
+
+            for (int i = 0; i < 7; i++)
+            {
+                string captchaText = Captcha.RecognizeCaptcha(bit[i]); // Job the tesseract | Метод будет изменен на прилет скриншота капчи в лс вконтакте
+                Console.WriteLine($"Распознанный текст капчи: {captchaText}"); // Print results
+            }
+
+            Thread.Sleep(3000); // Delat to avoid errors
         }
     }
 }

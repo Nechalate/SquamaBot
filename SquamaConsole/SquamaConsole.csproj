@@ -115,7 +115,7 @@
     <Compile Include="Editors.cs" />
     <Compile Include="KeyboardPress.cs" />
     <Compile Include="MouseClick.cs" />
-    <Compile Include="Pointer.cs" />
+    <Compile Include="MainThread.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

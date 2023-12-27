@@ -17,11 +17,11 @@ namespace SquamaConsole
         [DllImport("user32.dll")]
         public static extern bool SetForegroundWindow(IntPtr hWnd);
 
-        public static void RodPut(string windowTitle)
+        public static void PressTheButton(string windowTitle, string buttonName)
         {
             IntPtr rageHandle = FindWindow(null, windowTitle);
             SetForegroundWindow(rageHandle);
-            SendKeys.SendWait("1");
+            SendKeys.SendWait(buttonName);
         }
     }
 }
