@@ -3,6 +3,19 @@ using System.Runtime.InteropServices;
 
 internal class MouseClick
 {
+    [DllImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct RECT
+    {
+        public int Left;
+        public int Top;
+        public int Right;
+        public int Bottom;
+    }
+
     [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
     private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
@@ -13,11 +26,7 @@ internal class MouseClick
     private const int WM_LBUTTONUP = 0x0202;
 
     [DllImport("user32.dll")]
-    static extern IntPtr SetForegroundWindow(IntPtr hWnd);
-    [DllImport("user32.dll")]
     public static extern bool SendMessage(IntPtr hWnd, uint Msg, int wParam, int lParam);
-    [DllImport("user32.dll")]
-    static extern IntPtr FindWindowEx(IntPtr hWnd, string lpClassName, string lpWindowName, string lParam);
 
     public static void FishHooking(string windowTitle, int relativeX, int relativeY)
     {
@@ -31,19 +40,5 @@ internal class MouseClick
 
         SendMessage(windowHandle, WM_LBUTTONDOWN, 0, (absoluteY << 16) | absoluteX);
         SendMessage(windowHandle, WM_LBUTTONUP, 0, (absoluteY << 16) | absoluteX);
-    }
-
-
-    [DllImport("user32.dll")]
-    [return: MarshalAs(UnmanagedType.Bool)]
-    private static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
-
-    [StructLayout(LayoutKind.Sequential)]
-    public struct RECT
-    {
-        public int Left;
-        public int Top;
-        public int Right;
-        public int Bottom;
     }
 }

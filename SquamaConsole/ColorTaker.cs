@@ -14,18 +14,18 @@ internal class ColorTaker
     [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool ScreenToClient(IntPtr hWnd, ref POINT lpPoint);
 
+    [DllImport("user32.dll")]
+    public static extern IntPtr GetDC(IntPtr hWnd);
+
+    [DllImport("user32.dll")]
+    public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDc);
+
     [StructLayout(LayoutKind.Sequential)]
     public struct POINT
     {
         public int x;
         public int y;
     }
-
-    [DllImport("user32.dll")]
-    public static extern IntPtr GetDC(IntPtr hWnd);
-
-    [DllImport("user32.dll")]
-    public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDc);
 
     public static System.Drawing.Color GetColorAtInWindow(string windowTitle, System.Drawing.Point location)
     {
@@ -41,7 +41,6 @@ internal class ColorTaker
         {
             IntPtr hDcDest = gdest.GetHdc();
             BitBlt(hDcDest, 0, 0, 1, 1, hDc, clientPoint.x, clientPoint.y, (int)CopyPixelOperation.SourceCopy);
-            //Console.WriteLine($"{clientPoint.x}, {clientPoint.y}");
             gdest.ReleaseHdc();
         }
 

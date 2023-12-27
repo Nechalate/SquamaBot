@@ -10,7 +10,6 @@ namespace SquamaConsole
 {
     internal class MainThread
     {
-        private bool _fishingStop = false;
         public struct POINT
         {
             public int pointX;
@@ -60,19 +59,19 @@ namespace SquamaConsole
                     var point2 = new System.Drawing.Point(661, 1019);
                     var point3 = new System.Drawing.Point(912, 605);
 
-                    var color = ColorTaker.GetColorAtInWindow(windowTitle, point1);
-                    var colorGrab = ColorTaker.GetColorAtInWindow(windowTitle, point2);
-                    var colorCaptcha = ColorTaker.GetColorAtInWindow(windowTitle, point3);
+                    var fishHookingColor = ColorTaker.GetColorAtInWindow(windowTitle, point1);
+                    var repeatFishingColor = ColorTaker.GetColorAtInWindow(windowTitle, point2);
+                    var captchaColor = ColorTaker.GetColorAtInWindow(windowTitle, point3);
 
-                    if (color.ToString() == "Color [A=255, R=255, G=0, B=0]")
+                    if (fishHookingColor.ToString() == "Color [A=255, R=255, G=0, B=0]")
                     {
                         MouseClick.FishHooking(windowTitle, 50, 900);
                     }
-                    if (colorGrab.ToString() == "Color [A=255, R=148, G=248, B=7]")
+                    if (repeatFishingColor.ToString() == "Color [A=255, R=148, G=248, B=7]")
                     {
                         CastingFishingRod();
                     }
-                    if (colorCaptcha.ToString() == "Color [A=255, R=51, G=219, B=42]")
+                    if (captchaColor.ToString() == "Color [A=255, R=51, G=219, B=42]")
                     {
                         CatchTheCaptcha();
                     }
@@ -132,7 +131,7 @@ namespace SquamaConsole
                 Console.WriteLine($"Распознанный текст капчи: {captchaText}"); // Print results
             }
 
-            Thread.Sleep(3000); // Delat to avoid errors
+            Thread.Sleep(3000); // Delay to avoid errors
         }
 
         private static string InventorySpaceControl() // Checker the space inventory

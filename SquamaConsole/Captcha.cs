@@ -8,7 +8,7 @@ namespace SquamaConsole
 {
     internal class Captcha
     {
-        static string directory = @"C:\Users\relay\OneDrive\Рабочий стол\scrensos";
+        static string directory = @""; // Directory to save screenshots
 
         public static string RecognizeCaptcha(Bitmap captchaImage)
         {
