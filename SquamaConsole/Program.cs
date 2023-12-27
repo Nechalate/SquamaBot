@@ -18,7 +18,7 @@ namespace SquamaConsole
 
         static void Main(string[] args)
         {
-            Thread mouseTrackingThread = new Thread(MainThread.MouseTrackingThread);
+            Thread mouseTrackingThread = new Thread(MainThread.MainProgramThread);
 
             Console.Write("Поиск окна.");
 
