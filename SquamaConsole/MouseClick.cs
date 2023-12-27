@@ -23,21 +23,14 @@ internal class MouseClick
     {
         IntPtr windowHandle = FindWindow(null, windowTitle);
 
-        if (windowHandle != IntPtr.Zero)
-        {
-            RECT windowRect;
-            GetWindowRect(windowHandle, out windowRect);
+        RECT windowRect;
+        GetWindowRect(windowHandle, out windowRect);
 
-            int absoluteX = windowRect.Left + relativeX;
-            int absoluteY = windowRect.Top + relativeY;
+        int absoluteX = windowRect.Left + relativeX;
+        int absoluteY = windowRect.Top + relativeY;
 
-            SendMessage(windowHandle, WM_LBUTTONDOWN, 0, (absoluteY << 16) | absoluteX);
-            SendMessage(windowHandle, WM_LBUTTONUP, 0, (absoluteY << 16) | absoluteX);
-        }
-        else
-        {
-            Console.WriteLine("Окно не найдено.");
-        }
+        SendMessage(windowHandle, WM_LBUTTONDOWN, 0, (absoluteY << 16) | absoluteX);
+        SendMessage(windowHandle, WM_LBUTTONUP, 0, (absoluteY << 16) | absoluteX);
     }
 
 

@@ -14,7 +14,7 @@ namespace SquamaConsole
             public int pointY;
         }
 
-        static string windowTitle = "RАGЕ Multiplаyer ";
+        static string windowTitle = Program.windowTitle;
 
         static object lockObject = new object();
         static bool isPaused = false;
@@ -71,9 +71,9 @@ namespace SquamaConsole
                     }
                     if (colorGrab.ToString() == "Color [A=255, R=148, G=248, B=7]")
                     {
-                        //Thread.Sleep(500);
-                        //KeyboardPress.RodPut(windowTitle);
-                        //Thread.Sleep(5000);
+                        Thread.Sleep(500);
+                        KeyboardPress.RodPut(windowTitle);
+                        Thread.Sleep(5000);
                     }
                     if (colorCaptcha.ToString() == "Color [A=255, R=51, G=219, B=42]")
                     {
@@ -89,10 +89,10 @@ namespace SquamaConsole
 
                         //string captchaText = Captcha.RecognizeCaptcha(captchaImage);
                         //Console.WriteLine($"Распознанный текст капчи: {captchaText}");
-                        Thread.Sleep(5000);
+                        Thread.Sleep(3000);
                     }
 
-                    Thread.Sleep(3000);
+                    Thread.Sleep(70);
                 }
             }
             catch (ThreadAbortException)

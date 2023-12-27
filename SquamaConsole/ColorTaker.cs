@@ -31,28 +31,21 @@ internal class ColorTaker
     {
         IntPtr hwnd = FindWindow(null, windowTitle);
 
-        //if (hwnd != IntPtr.Zero)
-        //{
-            POINT clientPoint = new POINT { x = location.X, y = location.Y };
-            ScreenToClient(hwnd, ref clientPoint);
+        POINT clientPoint = new POINT { x = location.X, y = location.Y };
+        ScreenToClient(hwnd, ref clientPoint);
 
-            var screenPixel = new Bitmap(1, 1, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            IntPtr hDc = GetDC(hwnd);
+        var screenPixel = new Bitmap(1, 1, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+        IntPtr hDc = GetDC(hwnd);
 
-            using (var gdest = Graphics.FromImage(screenPixel))
-            {
-                IntPtr hDcDest = gdest.GetHdc();
-                BitBlt(hDcDest, 0, 0, 1, 1, hDc, clientPoint.x, clientPoint.y, (int)CopyPixelOperation.SourceCopy);
-                //Console.WriteLine($"{clientPoint.x}, {clientPoint.y}");
-                gdest.ReleaseHdc();
-            }
+        using (var gdest = Graphics.FromImage(screenPixel))
+        {
+            IntPtr hDcDest = gdest.GetHdc();
+            BitBlt(hDcDest, 0, 0, 1, 1, hDc, clientPoint.x, clientPoint.y, (int)CopyPixelOperation.SourceCopy);
+            //Console.WriteLine($"{clientPoint.x}, {clientPoint.y}");
+            gdest.ReleaseHdc();
+        }
 
-            ReleaseDC(hwnd, hDc);
-            return screenPixel.GetPixel(0, 0);
-        //}
-        //else
-        //{
-            //throw new Exception("Окно не найдено.");
-        //}
+        ReleaseDC(hwnd, hDc);
+        return screenPixel.GetPixel(0, 0);
     }
 }
