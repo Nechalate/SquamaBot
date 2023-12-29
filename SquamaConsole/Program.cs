@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Runtime.InteropServices;
@@ -14,29 +15,15 @@ namespace SquamaConsole
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
-        static public string windowTitle = "RАGЕ Мultiрlaуer";
+        static public string windowTitle = "";
 
         static void Main(string[] args)
         {
             Thread mouseTrackingThread = new Thread(MainThread.MainProgramThread);
 
-            Console.Write("Поиск окна.");
+            windowTitle = RageFinder();
 
-            while (true)
-            {
-                IntPtr windowHandle = FindWindow(null, windowTitle);
-
-                if (windowHandle != IntPtr.Zero)
-                {
-                    Console.WriteLine("Окно найдено.");
-                    break;
-                }
-                else
-                {
-                    windowTitle += " ";
-                    Console.Write(".");
-                }
-            }
+            IntPtr windowHandle = FindWindow(null, windowTitle);
 
             mouseTrackingThread.Start();
 
@@ -62,6 +49,24 @@ namespace SquamaConsole
                     Thread.Sleep(100); 
                 }
             }
+        }
+
+        private static string RageFinder()
+        {
+            Console.WriteLine("Поиск окна.");
+
+            List<string> openWindowNames = WindowFinder.GetOpenWindowNames(); // Список всех открытых окон
+
+            foreach (string windowName in openWindowNames)
+            {
+                if (windowName.Contains("RАGЕ"))
+                {
+                    Console.WriteLine("Окно найдено.");
+
+                    return windowName;
+                }
+            }
+            return "";
         }
     }
 }

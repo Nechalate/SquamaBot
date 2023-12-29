@@ -8,7 +8,7 @@ namespace SquamaConsole
 {
     internal class Captcha
     {
-        static string directory = @""; // Directory to save screenshots
+        static string directory = @"C:\Users\relay\OneDrive\Рабочий стол\scrensos"; // Directory to save screenshots
 
         public static string RecognizeCaptcha(Bitmap captchaImage)
         {
@@ -41,13 +41,17 @@ namespace SquamaConsole
             return screenshotsCutted;
         }
         
-        public static void SaveBitmaps(Bitmap[] bitmaps)
+        public static void SaveBitmaps(Bitmap bitmaps)
         {
+            /*
             for (int i = 0; i < bitmaps.Length; i++)
             {
                 string fileName = Path.Combine(directory, $"part_{i}.png");
                 bitmaps[i].Save(fileName, System.Drawing.Imaging.ImageFormat.Png);
             }
+            */
+            string fileName = Path.Combine(directory, $"inventory.png");
+            bitmaps.Save(fileName, System.Drawing.Imaging.ImageFormat.Png);
         }
         
         public static Bitmap CaptureCaptchaArea(int x, int y, int width, int height)
@@ -60,7 +64,7 @@ namespace SquamaConsole
             }
 
             screenshot = Editors.ConvertToBlackAndWhite(screenshot);
-            screenshot = Editors.ApplyContrast(screenshot, 50f);
+            //screenshot = Editors.ApplyContrast(screenshot, 50f);
 
             return screenshot;
         }

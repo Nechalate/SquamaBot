@@ -93,8 +93,6 @@ namespace SquamaConsole
 
             try
             {
-                Console.WriteLine(InventorySpaceControl());
-
                 if (Convert.ToInt32(InventorySpaceControl()) >= 950)
                 {
                     Console.Beep();
@@ -136,8 +134,10 @@ namespace SquamaConsole
 
         private static string InventorySpaceControl() // Checker the space inventory
         {
-            Bitmap inventorySpaceImage = Captcha.CaptureCaptchaArea(1632, 190, 41, 25); // Area of inventory space
+            Bitmap inventorySpaceImage = Captcha.CaptureCaptchaArea(1632, 190, 42, 30); // Area of inventory space 41 25
             string inventoryText = Captcha.RecognizeCaptcha(inventorySpaceImage); // Tesseract work
+
+            //Captcha.SaveBitmaps(inventorySpaceImage);
 
             return inventoryText;
         }
