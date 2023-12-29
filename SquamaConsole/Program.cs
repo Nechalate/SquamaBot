@@ -55,7 +55,7 @@ namespace SquamaConsole
         {
             Console.WriteLine("Поиск окна.");
 
-            List<string> openWindowNames = WindowFinder.GetOpenWindowNames(); // Список всех открытых окон
+            List<string> openWindowNames = WindowsList.GetOpenWindowNames(); // List all opens windows
 
             foreach (string windowName in openWindowNames)
             {

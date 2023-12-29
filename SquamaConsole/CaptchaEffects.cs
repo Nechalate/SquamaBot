@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SquamaConsole
 {
-    internal class Editors
+    internal class CaptchaEffects
     {
         public static Bitmap ApplyContrast(Bitmap image, float contrast)
         {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SquamaConsole
 {
-    internal class WindowFinder
+    internal class WindowsList
     {
         [DllImport("user32.dll")]
         public static extern int GetWindowText(IntPtr hWnd, System.Text.StringBuilder lpString, int nMaxCount);

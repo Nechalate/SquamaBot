@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System;
 
-internal class ColorTaker
+internal class ColorGetter
 {
     [DllImport("gdi32.dll", CharSet = CharSet.Auto, SetLastError = true, ExactSpelling = true)]
     public static extern int BitBlt(IntPtr hDc, int x, int y, int nWidth, int nHeight, IntPtr hSrcDC, int xSrc, int ySrc, int dwRop);

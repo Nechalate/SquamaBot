@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace SquamaConsole
 {
-    internal class KeyboardPress
+    internal class ButtonEmulation
     {
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         public static extern IntPtr FindWindow(string lpClassName,

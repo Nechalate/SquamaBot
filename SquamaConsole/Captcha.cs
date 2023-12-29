@@ -63,7 +63,7 @@ namespace SquamaConsole
                 g.CopyFromScreen(x, y, 0, 0, screenshot.Size);
             }
 
-            screenshot = Editors.ConvertToBlackAndWhite(screenshot);
+            screenshot = CaptchaEffects.ConvertToBlackAndWhite(screenshot);
             //screenshot = Editors.ApplyContrast(screenshot, 50f);
 
             return screenshot;

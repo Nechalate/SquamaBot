@@ -111,14 +111,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Captcha.cs" />
-    <Compile Include="ColorTaker.cs" />
-    <Compile Include="Editors.cs" />
-    <Compile Include="KeyboardPress.cs" />
-    <Compile Include="MouseClick.cs" />
+    <Compile Include="ColorGetter.cs" />
+    <Compile Include="CaptchaEffects.cs" />
+    <Compile Include="ButtonEmulation.cs" />
+    <Compile Include="LkmEmulation.cs" />
     <Compile Include="MainThread.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WindowFinder.cs" />
+    <Compile Include="WindowsList.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

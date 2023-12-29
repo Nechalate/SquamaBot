@@ -59,13 +59,13 @@ namespace SquamaConsole
                     var point2 = new System.Drawing.Point(661, 1019);
                     var point3 = new System.Drawing.Point(912, 605);
 
-                    var fishHookingColor = ColorTaker.GetColorAtInWindow(windowTitle, point1);
-                    var repeatFishingColor = ColorTaker.GetColorAtInWindow(windowTitle, point2);
-                    var captchaColor = ColorTaker.GetColorAtInWindow(windowTitle, point3);
+                    var fishHookingColor = ColorGetter.GetColorAtInWindow(windowTitle, point1);
+                    var repeatFishingColor = ColorGetter.GetColorAtInWindow(windowTitle, point2);
+                    var captchaColor = ColorGetter.GetColorAtInWindow(windowTitle, point3);
 
                     if (fishHookingColor.ToString() == "Color [A=255, R=255, G=0, B=0]")
                     {
-                        MouseClick.FishHooking(windowTitle, 50, 900);
+                        LkmEmulation.FishHooking(windowTitle, 50, 900);
                     }
                     if (repeatFishingColor.ToString() == "Color [A=255, R=148, G=248, B=7]")
                     {
@@ -89,7 +89,7 @@ namespace SquamaConsole
         {
             Thread.Sleep(300);
 
-            KeyboardPress.PressTheButton(windowTitle, "I"); // Open Inventory
+            ButtonEmulation.PressTheButton(windowTitle, "I"); // Open Inventory
 
             try
             {
@@ -102,10 +102,10 @@ namespace SquamaConsole
                 else
                 {
                     Thread.Sleep(550);
-                    MouseClick.FishHooking(windowTitle, 1492, 287); // Click the rod
+                    LkmEmulation.FishHooking(windowTitle, 1492, 287); // Click the rod
 
                     Thread.Sleep(350);
-                    MouseClick.FishHooking(windowTitle, 1492, 329); // Click the start fishing
+                    LkmEmulation.FishHooking(windowTitle, 1492, 329); // Click the start fishing
                 }
             }
             catch (System.FormatException)

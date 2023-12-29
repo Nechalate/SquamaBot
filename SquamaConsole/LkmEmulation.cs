@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-internal class MouseClick
+internal class LkmEmulation
 {
     [DllImport("user32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]
