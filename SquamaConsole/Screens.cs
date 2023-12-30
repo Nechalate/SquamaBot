@@ -1,16 +1,17 @@
 ﻿using System.Drawing;
 using System.IO;
 using Tesseract;
-using OpenCvSharp;
+using System.Linq;
 using Emgu.CV.Reg;
+using System;
 
 namespace SquamaConsole
 {
-    internal class Captcha
+    internal class Screens
     {
-        static string directory = @"C:\Users\relay\OneDrive\Рабочий стол\scrensos"; // Directory to save screenshots
+        static string directory = @"D:\PetProjects\Squama\inventory_errors"; // Directory to save screenshots
 
-        public static string RecognizeCaptcha(Bitmap captchaImage)
+        public static string RecognizeScreen(Bitmap captchaImage)
         {
             using (var engine = new TesseractEngine(@"D:\PetProjects\Squama\traineddata", "eng", EngineMode.Default))
             {
@@ -40,21 +41,29 @@ namespace SquamaConsole
             
             return screenshotsCutted;
         }
-        
+
+        public static void ScreensScan()
+        {
+            string[] files = Directory.GetFiles(directory);
+
+            foreach (string file in files)
+            {
+                Console.WriteLine(Path.GetFileName(file));
+            }
+        }
+
         public static void SaveBitmaps(Bitmap bitmaps)
         {
-            /*
-            for (int i = 0; i < bitmaps.Length; i++)
-            {
-                string fileName = Path.Combine(directory, $"part_{i}.png");
-                bitmaps[i].Save(fileName, System.Drawing.Imaging.ImageFormat.Png);
-            }
-            */
-            string fileName = Path.Combine(directory, $"inventory.png");
+            string[] files = Directory.GetFiles(directory);
+
+            string lastFileDigitStr = Path.GetFileNameWithoutExtension(files.Last());
+            int lastFileDigitInt = Convert.ToInt32(lastFileDigitStr) + 1;
+
+            string fileName = Path.Combine(directory, lastFileDigitInt.ToString() + ".png");
             bitmaps.Save(fileName, System.Drawing.Imaging.ImageFormat.Png);
         }
         
-        public static Bitmap CaptureCaptchaArea(int x, int y, int width, int height)
+        public static Bitmap CaptureScreenshotArea(int x, int y, int width, int height)
         {
             Bitmap screenshot = new Bitmap(width, height);
 
@@ -63,7 +72,7 @@ namespace SquamaConsole
                 g.CopyFromScreen(x, y, 0, 0, screenshot.Size);
             }
 
-            screenshot = CaptchaEffects.ConvertToBlackAndWhite(screenshot);
+            screenshot = ScreenshotsEffects.ConvertToBlackAndWhite(screenshot);
             //screenshot = Editors.ApplyContrast(screenshot, 50f);
 
             return screenshot;

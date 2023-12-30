@@ -110,9 +110,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Captcha.cs" />
+    <Compile Include="Screens.cs" />
     <Compile Include="ColorGetter.cs" />
-    <Compile Include="CaptchaEffects.cs" />
+    <Compile Include="ScreenshotsEffects.cs" />
     <Compile Include="ButtonEmulation.cs" />
     <Compile Include="LkmEmulation.cs" />
     <Compile Include="MainThread.cs" />

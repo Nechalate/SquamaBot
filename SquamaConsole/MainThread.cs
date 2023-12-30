@@ -65,8 +65,6 @@ namespace SquamaConsole
                     var repeatFishingColor = ColorGetter.GetColorAtInWindow(windowTitle, point2);
                     var captchaColor = ColorGetter.GetColorAtInWindow(windowTitle, point3);
 
-                    //InventorySpaceControl();
-
                     if (fishHookingColor.ToString() == "Color [A=255, R=255, G=0, B=0]")
                     {
                         LkmEmulation.FishHooking(windowTitle, 50, 900);
@@ -95,6 +93,8 @@ namespace SquamaConsole
 
             ButtonEmulation.PressTheButton(windowTitle, "I"); // Open Inventory
 
+            Thread.Sleep(500);
+
             InventorySpaceControl();
 
             Thread.Sleep(5000); // Delay to avoid errors
@@ -104,22 +104,22 @@ namespace SquamaConsole
         {
             Console.Beep(); // Sound signal to catch
 
-            Bitmap captchaImage = Captcha.CaptureCaptchaArea(861, 456, 197, 48); // Area of screenshot
-            Bitmap[] bit = Captcha.ScreenShotCutter(captchaImage); // Screenshot slices
+            Bitmap captchaImage = Screens.CaptureScreenshotArea(861, 456, 197, 48); // Area of screenshot
+            Bitmap[] bit = Screens.ScreenShotCutter(captchaImage); // Screenshot slices
 
             for (int i = 0; i < 7; i++)
             {
-                string captchaText = Captcha.RecognizeCaptcha(bit[i]); // Job the tesseract | Метод будет изменен на прилет скриншота капчи в лс вконтакте
+                string captchaText = Screens.RecognizeScreen(bit[i]); // Job the tesseract | Метод будет изменен на прилет скриншота капчи в лс вконтакте
                 Console.WriteLine($"Распознанный текст капчи: {captchaText}"); // Print results
             }
 
             Thread.Sleep(3000); // Delay to avoid errors
         }
 
-        private static string InventorySpaceControl() // Checker the space inventory
+        public static string InventorySpaceControl() // Checker the space inventory
         {
-            Bitmap inventorySpaceImage = Captcha.CaptureCaptchaArea(1628, 182, 48, 38); // Area of inventory space 41 25
-            string inventoryText = Captcha.RecognizeCaptcha(inventorySpaceImage); // Tesseract work
+            Bitmap inventorySpaceImage = Screens.CaptureScreenshotArea(1628, 182, 45, 30); // Area of inventory space 41 25
+            string inventoryText = Screens.RecognizeScreen(inventorySpaceImage); // Tesseract work
 
             try
             {
@@ -127,10 +127,14 @@ namespace SquamaConsole
                 {
                     Console.Beep();
                     Console.WriteLine("Инвентарь заполнен.");
+                    Console.WriteLine(Convert.ToInt32(inventoryText));
+                    Screens.SaveBitmaps(inventorySpaceImage);
                     TogglePause();
                 }
                 else
                 {
+                    errorsCounter = 0;
+
                     Thread.Sleep(550);
                     LkmEmulation.FishHooking(windowTitle, 1492, 287); // Click the rod
 
@@ -151,8 +155,11 @@ namespace SquamaConsole
                 else
                 {
                     Console.WriteLine("Непредвиденная ошибка чтения. Начините или остановите рыбалку" +
-                        "самостоятельно.");
+                        " самостоятельно.");
+                    errorsCounter = 0;
                     Console.Beep();
+                    Screens.SaveBitmaps(inventorySpaceImage);
+                    TogglePause();
                 }
             }
 

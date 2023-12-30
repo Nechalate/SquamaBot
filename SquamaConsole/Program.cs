@@ -59,14 +59,18 @@ namespace SquamaConsole
 
             foreach (string windowName in openWindowNames)
             {
-                if (windowName.Contains("RАGЕ"))
+                if (windowName.Contains("RAGE") || windowName.Contains("RAGЕ"))
                 {
                     Console.WriteLine("Окно найдено.");
 
                     return windowName;
                 }
+                else
+                {
+                    Console.WriteLine(windowName);
+                }
             }
-            return "";
+            return "None";
         }
     }
 }
