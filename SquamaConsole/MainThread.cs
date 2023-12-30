@@ -21,6 +21,8 @@ namespace SquamaConsole
         static object lockObject = new object();
         static bool isPaused = false;
 
+        static int errorsCounter = 0;
+
         [DllImport("user32.dll")]
         static extern bool GetCursorPos(out POINT lpPoint);
 
@@ -63,6 +65,8 @@ namespace SquamaConsole
                     var repeatFishingColor = ColorGetter.GetColorAtInWindow(windowTitle, point2);
                     var captchaColor = ColorGetter.GetColorAtInWindow(windowTitle, point3);
 
+                    //InventorySpaceControl();
+
                     if (fishHookingColor.ToString() == "Color [A=255, R=255, G=0, B=0]")
                     {
                         LkmEmulation.FishHooking(windowTitle, 50, 900);
@@ -91,27 +95,7 @@ namespace SquamaConsole
 
             ButtonEmulation.PressTheButton(windowTitle, "I"); // Open Inventory
 
-            try
-            {
-                if (Convert.ToInt32(InventorySpaceControl()) >= 950)
-                {
-                    Console.Beep();
-                    Console.WriteLine("Инвентарь заполнен.");
-                    TogglePause();
-                }
-                else
-                {
-                    Thread.Sleep(550);
-                    LkmEmulation.FishHooking(windowTitle, 1492, 287); // Click the rod
-
-                    Thread.Sleep(350);
-                    LkmEmulation.FishHooking(windowTitle, 1492, 329); // Click the start fishing
-                }
-            }
-            catch (System.FormatException)
-            {
-                InventorySpaceControl();
-            }
+            InventorySpaceControl();
 
             Thread.Sleep(5000); // Delay to avoid errors
         }
@@ -134,10 +118,43 @@ namespace SquamaConsole
 
         private static string InventorySpaceControl() // Checker the space inventory
         {
-            Bitmap inventorySpaceImage = Captcha.CaptureCaptchaArea(1632, 190, 42, 30); // Area of inventory space 41 25
+            Bitmap inventorySpaceImage = Captcha.CaptureCaptchaArea(1628, 182, 48, 38); // Area of inventory space 41 25
             string inventoryText = Captcha.RecognizeCaptcha(inventorySpaceImage); // Tesseract work
 
-            //Captcha.SaveBitmaps(inventorySpaceImage);
+            try
+            {
+                if (Convert.ToInt32(inventoryText) >= 950)
+                {
+                    Console.Beep();
+                    Console.WriteLine("Инвентарь заполнен.");
+                    TogglePause();
+                }
+                else
+                {
+                    Thread.Sleep(550);
+                    LkmEmulation.FishHooking(windowTitle, 1492, 287); // Click the rod
+
+                    Thread.Sleep(350);
+                    LkmEmulation.FishHooking(windowTitle, 1492, 329); // Click the start fishing
+                    Console.WriteLine(Convert.ToInt32(inventoryText));
+                }
+            }
+            catch (System.FormatException)
+            {
+                errorsCounter++;
+                Console.WriteLine($"ERROR: {errorsCounter}");
+
+                if (errorsCounter < 10)
+                {
+                    InventorySpaceControl();
+                }
+                else
+                {
+                    Console.WriteLine("Непредвиденная ошибка чтения. Начините или остановите рыбалку" +
+                        "самостоятельно.");
+                    Console.Beep();
+                }
+            }
 
             return inventoryText;
         }
