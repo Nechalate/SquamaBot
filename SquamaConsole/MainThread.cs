@@ -65,6 +65,8 @@ namespace SquamaConsole
                     var repeatFishingColor = ColorGetter.GetColorAtInWindow(windowTitle, point2);
                     var captchaColor = ColorGetter.GetColorAtInWindow(windowTitle, point3);
 
+                    //InventorySpaceControl();
+
                     if (fishHookingColor.ToString() == "Color [A=255, R=255, G=0, B=0]")
                     {
                         LkmEmulation.FishHooking(windowTitle, 50, 900);
@@ -118,12 +120,18 @@ namespace SquamaConsole
 
         public static string InventorySpaceControl() // Checker the space inventory
         {
-            Bitmap inventorySpaceImage = Screens.CaptureScreenshotArea(1628, 182, 45, 30); // Area of inventory space 41 25
-            string inventoryText = Screens.RecognizeScreen(inventorySpaceImage); // Tesseract work
+            Bitmap inventorySpaceImage = Screens.CaptureScreenshotArea(1628, 182, 45, 30); // Area of inventory space 41 25 //45
+            string inventoryText = Screens.RecognizeScreen(ScreenshotsEffects.ColorReplace(inventorySpaceImage)); // Tesseract work
+
+            if (inventoryText.Contains(" "))
+            {
+                
+                inventoryText = inventoryText.Replace(" ", "");
+            }
 
             try
             {
-                if (Convert.ToInt32(inventoryText) >= 950)
+                if (Convert.ToInt32(inventoryText) >= 950 && Convert.ToInt32(inventoryText[0]) < 9) // TEST
                 {
                     Console.Beep();
                     Console.WriteLine("Инвентарь заполнен.");
@@ -133,6 +141,7 @@ namespace SquamaConsole
                 }
                 else
                 {
+                    Screens.SaveBitmaps(inventorySpaceImage);
                     errorsCounter = 0;
 
                     Thread.Sleep(550);
@@ -158,7 +167,7 @@ namespace SquamaConsole
                         " самостоятельно.");
                     errorsCounter = 0;
                     Console.Beep();
-                    Screens.SaveBitmaps(inventorySpaceImage);
+                    Screens.SaveBitmaps(ScreenshotsEffects.ColorReplace(inventorySpaceImage));
                     TogglePause();
                 }
             }

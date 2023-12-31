@@ -58,5 +58,26 @@ namespace SquamaConsole
 
             return result;
         }
+
+        public static Bitmap ColorReplace(Bitmap image)
+        {
+            Color targetColor = Color.FromArgb(180, 180, 180); // Например, красный цвет
+
+            Color replacementColor = Color.Black;
+
+            for (int x = 0; x < image.Width; x++)
+            {
+                for (int y = 0; y < image.Height; y++)
+                {
+                    Color pixelColor = image.GetPixel(x, y);
+                    if (pixelColor.ToArgb() <= targetColor.ToArgb())
+                    {
+                        image.SetPixel(x, y, replacementColor);
+                    }
+                }
+            }
+
+            return image;
+        }
     }
 }
