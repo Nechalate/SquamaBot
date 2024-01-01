@@ -61,7 +61,7 @@ namespace SquamaConsole
 
         public static Bitmap ColorReplace(Bitmap image)
         {
-            Color targetColor = Color.FromArgb(180, 180, 180); // Например, красный цвет
+            Color targetColor = Color.FromArgb(160, 160, 160); // Например, красный цвет
 
             Color replacementColor = Color.Black;
 

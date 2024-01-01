@@ -65,14 +65,18 @@ namespace SquamaConsole
                     var repeatFishingColor = ColorGetter.GetColorAtInWindow(windowTitle, point2);
                     var captchaColor = ColorGetter.GetColorAtInWindow(windowTitle, point3);
 
-                    //InventorySpaceControl();
-
                     if (fishHookingColor.ToString() == "Color [A=255, R=255, G=0, B=0]")
                     {
+                        IntPtr hwnd = FindWindow(null, windowTitle);
+                        SetForegroundWindow(hwnd);
+
                         LkmEmulation.FishHooking(windowTitle, 50, 900);
                     }
                     if (repeatFishingColor.ToString() == "Color [A=255, R=148, G=248, B=7]")
                     {
+                        IntPtr hwnd = FindWindow(null, windowTitle);
+                        SetForegroundWindow(hwnd);
+
                         CastingFishingRod();
                     }
                     if (captchaColor.ToString() == "Color [A=255, R=51, G=219, B=42]")
@@ -123,7 +127,7 @@ namespace SquamaConsole
             Bitmap inventorySpaceImage = Screens.CaptureScreenshotArea(1628, 182, 45, 30); // Area of inventory space 41 25 //45
             string inventoryText = Screens.RecognizeScreen(ScreenshotsEffects.ColorReplace(inventorySpaceImage)); // Tesseract work
 
-            if (inventoryText.Contains(" "))
+            if (inventoryText.Contains(" ")) // If str "example: 2 37" this fix that
             {
                 
                 inventoryText = inventoryText.Replace(" ", "");
@@ -131,17 +135,15 @@ namespace SquamaConsole
 
             try
             {
-                if (Convert.ToInt32(inventoryText) >= 950 && Convert.ToInt32(inventoryText[0]) < 9) // TEST
+                if (Convert.ToInt32(inventoryText) >= 950 && Convert.ToInt32(inventoryText) <= 1000) // TEST
                 {
                     Console.Beep();
                     Console.WriteLine("Инвентарь заполнен.");
                     Console.WriteLine(Convert.ToInt32(inventoryText));
-                    Screens.SaveBitmaps(inventorySpaceImage);
                     TogglePause();
                 }
                 else
                 {
-                    Screens.SaveBitmaps(inventorySpaceImage);
                     errorsCounter = 0;
 
                     Thread.Sleep(550);
@@ -174,5 +176,10 @@ namespace SquamaConsole
 
             return inventoryText;
         }
+
+        [DllImport("user32.dll")]
+        public static extern bool SetForegroundWindow(IntPtr hWnd);
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
     }
 }

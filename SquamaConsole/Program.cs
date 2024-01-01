@@ -53,24 +53,23 @@ namespace SquamaConsole
 
         private static string RageFinder()
         {
+            int winNum = 0;
+
             Console.WriteLine("Поиск окна.");
 
             List<string> openWindowNames = WindowsList.GetOpenWindowNames(); // List all opens windows
 
             foreach (string windowName in openWindowNames)
             {
-                if (windowName.Contains("RAGE") || windowName.Contains("RAGЕ"))
-                {
-                    Console.WriteLine("Окно найдено.");
-
-                    return windowName;
-                }
-                else
-                {
-                    Console.WriteLine(windowName);
-                }
+                Console.WriteLine($"{winNum}: {windowName}");
+                winNum++;
             }
-            return "None";
+
+            Console.Write("Выберете окно: ");
+
+            winNum = Convert.ToInt32(Console.ReadLine()); Console.WriteLine(openWindowNames[winNum]);
+
+            return openWindowNames[winNum];
         }
     }
 }
