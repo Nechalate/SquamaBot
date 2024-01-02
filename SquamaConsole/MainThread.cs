@@ -61,9 +61,13 @@ namespace SquamaConsole
                     var point2 = new System.Drawing.Point(661, 1019);
                     var point3 = new System.Drawing.Point(912, 605);
 
+                    var portPoint = new System.Drawing.Point(966, 495);
+
                     var fishHookingColor = ColorGetter.GetColorAtInWindow(windowTitle, point1);
                     var repeatFishingColor = ColorGetter.GetColorAtInWindow(windowTitle, point2);
                     var captchaColor = ColorGetter.GetColorAtInWindow(windowTitle, point3);
+
+                    var portColor = ColorGetter.GetColorAtInWindow(windowTitle, portPoint); 
 
                     if (fishHookingColor.ToString() == "Color [A=255, R=255, G=0, B=0]")
                     {
@@ -83,6 +87,10 @@ namespace SquamaConsole
                     {
                         CatchTheCaptcha();
                     }
+                    if (portColor.ToString() == "Color [A=255, R=126, G=211, B=33]")
+                    {
+                        Port();
+                    }
 
                     Thread.Sleep(70);
                 }
@@ -91,6 +99,11 @@ namespace SquamaConsole
             {
                 Console.Write("Error");
             }
+        }
+
+        private static void Port()
+        {
+            ButtonEmulation.PressTheButton(windowTitle, "F");
         }
 
         private static void CastingFishingRod() // Connected method
