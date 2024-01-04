@@ -1,5 +1,5 @@
 <p align="center">
- Бот на рыбалку
+ Бот на рыбалку.
 </p>
 <p align="center">
  <img width="600px" src="/images/squama.png" alt="qr"/>
