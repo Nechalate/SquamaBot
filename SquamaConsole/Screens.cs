@@ -4,6 +4,8 @@ using Tesseract;
 using System.Linq;
 using Emgu.CV.Reg;
 using System;
+using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 namespace SquamaConsole
 {
@@ -62,6 +64,19 @@ namespace SquamaConsole
             string fileName = Path.Combine(directory, lastFileDigitInt.ToString() + ".png");
             bitmaps.Save(fileName, System.Drawing.Imaging.ImageFormat.Png);
         }
+
+        public static void FullScreenshot(Process process)
+        {
+            var hwnd = process.MainWindowHandle;
+            RECT rect;
+            GetWindowRect(hwnd, out rect);
+            var image = new Bitmap(rect.right - rect.left, rect.bottom - rect.top);
+            var graphics = Graphics.FromImage(image);
+            var hdcBitmap = graphics.GetHdc();
+            PrintWindow(hwnd, hdcBitmap, 0);
+            graphics.ReleaseHdc(hdcBitmap);
+            image.Save(@"D:\PetProjects\Squama\inventory_errors", System.Drawing.Imaging.ImageFormat.Png);
+        }
         
         public static Bitmap CaptureScreenshotArea(int x, int y, int width, int height)
         {
@@ -77,5 +92,21 @@ namespace SquamaConsole
 
             return screenshot;
         }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct RECT
+        {
+            public int left;
+            public int top;
+            public int right;
+            public int bottom;
+        }
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+
+        [DllImport("user32.dll")]
+        static extern bool PrintWindow(IntPtr hWnd, IntPtr hdcBlt, int nFlags);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -17,6 +18,8 @@ namespace SquamaConsole
         }
 
         static string windowTitle = Program.windowTitle;
+
+        static readonly IntPtr hwnd = FindWindow(null, windowTitle);
 
         static object lockObject = new object();
         static bool isPaused = false;
@@ -71,14 +74,14 @@ namespace SquamaConsole
 
                     if (fishHookingColor.ToString() == "Color [A=255, R=255, G=0, B=0]")
                     {
-                        SetActiveWindow();
+                        SetForegroundWindow(hwnd);
 
                         LkmEmulation.FishHooking(windowTitle, 50, 900);
                     }
                     if (repeatFishingColor.ToString() == "Color [A=255, R=148, G=248, B=7]")
                     {
-                        SetActiveWindow();
-                    
+                        SetForegroundWindow(hwnd);
+
                         CastingFishingRod();
                     }
                     if (captchaColor.ToString() == "Color [A=255, R=51, G=219, B=42]")
@@ -99,12 +102,6 @@ namespace SquamaConsole
             {
                 Console.Write("Error");
             }
-        }
-
-        private static void SetActiveWindow()
-        {
-            IntPtr hwnd = FindWindow(null, windowTitle);
-            SetForegroundWindow(hwnd);
         }
 
         private static void Port() // Port work mini game
@@ -143,6 +140,7 @@ namespace SquamaConsole
 
         public static string InventorySpaceControl() // Checker the space inventory
         {
+            //Screens.FullScreenshot();
             Bitmap inventorySpaceImage = Screens.CaptureScreenshotArea(1628, 182, 45, 30); // Area of inventory space 41 25 //45
             string inventoryText = Screens.RecognizeScreen(ScreenshotsEffects.ColorReplace(inventorySpaceImage)); // Tesseract work
 
