@@ -71,26 +71,26 @@ namespace SquamaConsole
 
                     if (fishHookingColor.ToString() == "Color [A=255, R=255, G=0, B=0]")
                     {
-                        IntPtr hwnd = FindWindow(null, windowTitle);
-                        SetForegroundWindow(hwnd);
+                        SetActiveWindow();
 
                         LkmEmulation.FishHooking(windowTitle, 50, 900);
                     }
                     if (repeatFishingColor.ToString() == "Color [A=255, R=148, G=248, B=7]")
                     {
-                        IntPtr hwnd = FindWindow(null, windowTitle);
-                        SetForegroundWindow(hwnd);
-
+                        SetActiveWindow();
+                    
                         CastingFishingRod();
                     }
                     if (captchaColor.ToString() == "Color [A=255, R=51, G=219, B=42]")
                     {
                         CatchTheCaptcha();
                     }
+                    /*
                     if (portColor.ToString() == "Color [A=255, R=126, G=211, B=33]")
                     {
                         Port();
                     }
+                    */
 
                     Thread.Sleep(70);
                 }
@@ -101,9 +101,15 @@ namespace SquamaConsole
             }
         }
 
-        private static void Port()
+        private static void SetActiveWindow()
         {
-            ButtonEmulation.PressTheButton(windowTitle, "F");
+            IntPtr hwnd = FindWindow(null, windowTitle);
+            SetForegroundWindow(hwnd);
+        }
+
+        private static void Port() // Port work mini game
+        {
+            ButtonEmulation.PressTheButton(windowTitle, "E");
         }
 
         private static void CastingFishingRod() // Connected method
