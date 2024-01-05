@@ -45,6 +45,8 @@ namespace SquamaConsole
 
         public static void MainProgramThread()
         {
+            Screens.ScreenshotFull(windowTitle);
+
             try
             {
                 while (true)
@@ -140,7 +142,6 @@ namespace SquamaConsole
 
         public static string InventorySpaceControl() // Checker the space inventory
         {
-            //Screens.FullScreenshot();
             Bitmap inventorySpaceImage = Screens.CaptureScreenshotArea(1628, 182, 45, 30); // Area of inventory space 41 25 //45
             string inventoryText = Screens.RecognizeScreen(ScreenshotsEffects.ColorReplace(inventorySpaceImage)); // Tesseract work
 
@@ -196,6 +197,7 @@ namespace SquamaConsole
 
         [DllImport("user32.dll")]
         public static extern bool SetForegroundWindow(IntPtr hWnd);
+
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
     }

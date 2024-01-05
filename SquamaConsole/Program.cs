@@ -19,12 +19,6 @@ namespace SquamaConsole
 
         static void Main(string[] args)
         {
-            Process[] processes = Process.GetProcesses();
-            foreach (Process process in processes)
-            {
-                Console.WriteLine(process.ProcessName);
-            }
-
             Thread mouseTrackingThread = new Thread(MainThread.MainProgramThread);
 
             windowTitle = RageFinder();

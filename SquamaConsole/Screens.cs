@@ -6,6 +6,8 @@ using Emgu.CV.Reg;
 using System;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.Threading;
+using System.Drawing.Imaging;
 
 namespace SquamaConsole
 {
@@ -26,6 +28,44 @@ namespace SquamaConsole
                         return page.GetText().Trim();
                     }
                 }
+            }
+        }
+
+        public static void ScreenshotFull(string windowTitle)
+        {
+            IntPtr hwnd = FindWindow(null, windowTitle);
+            CaptureWindow(hwnd);
+        }
+
+        static private void CaptureWindow(IntPtr handle)
+        {
+            // Get the size of the window to capture
+            Rectangle rect = new Rectangle();
+            GetWindowRect(handle, ref rect);
+
+            // GetWindowRect returns Top/Left and Bottom/Right, so fix it
+            rect.Width = rect.Width - rect.X;
+            rect.Height = rect.Height - rect.Y;
+
+            // Create a bitmap to draw the capture into
+            using (Bitmap bitmap = new Bitmap(rect.Width, rect.Height))
+            {
+                // Use PrintWindow to draw the window into our bitmap
+                using (Graphics g = Graphics.FromImage(bitmap))
+                {
+                    IntPtr hdc = g.GetHdc();
+                    if (!PrintWindow(handle, hdc, 0))
+                    {
+                        int error = Marshal.GetLastWin32Error();
+                        var exception = new System.ComponentModel.Win32Exception(error);
+                        Debug.WriteLine("ERROR: " + error + ": " + exception.Message);
+                        // TODO: Throw the exception?
+                    }
+                    g.ReleaseHdc(hdc);
+                }
+
+                // Save it as a .png just to demo this
+                bitmap.Save("Example.jpeg");
             }
         }
 
@@ -64,19 +104,6 @@ namespace SquamaConsole
             string fileName = Path.Combine(directory, lastFileDigitInt.ToString() + ".png");
             bitmaps.Save(fileName, System.Drawing.Imaging.ImageFormat.Png);
         }
-
-        public static void FullScreenshot(Process process)
-        {
-            var hwnd = process.MainWindowHandle;
-            RECT rect;
-            GetWindowRect(hwnd, out rect);
-            var image = new Bitmap(rect.right - rect.left, rect.bottom - rect.top);
-            var graphics = Graphics.FromImage(image);
-            var hdcBitmap = graphics.GetHdc();
-            PrintWindow(hwnd, hdcBitmap, 0);
-            graphics.ReleaseHdc(hdcBitmap);
-            image.Save(@"D:\PetProjects\Squama\inventory_errors", System.Drawing.Imaging.ImageFormat.Png);
-        }
         
         public static Bitmap CaptureScreenshotArea(int x, int y, int width, int height)
         {
@@ -96,17 +123,20 @@ namespace SquamaConsole
         [StructLayout(LayoutKind.Sequential)]
         public struct RECT
         {
-            public int left;
-            public int top;
-            public int right;
-            public int bottom;
+            public int Left;
+            public int Top;
+            public int Right;
+            public int Bottom;
         }
 
-        [DllImport("user32.dll")]
+        [DllImport("User32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+        static extern bool PrintWindow(IntPtr hwnd, IntPtr hDC, uint nFlags);
 
         [DllImport("user32.dll")]
-        static extern bool PrintWindow(IntPtr hWnd, IntPtr hdcBlt, int nFlags);
+        static extern bool GetWindowRect(IntPtr handle, ref Rectangle rect);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
     }
 }
