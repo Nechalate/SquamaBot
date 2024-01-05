@@ -8,6 +8,9 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Threading;
 using System.Drawing.Imaging;
+using AutoIt;
+using System.Windows.Automation;
+using System.Windows.Forms;
 
 namespace SquamaConsole
 {
@@ -31,42 +34,46 @@ namespace SquamaConsole
             }
         }
 
-        public static void ScreenshotFull(string windowTitle)
+        public static void ScreenshotFull(IntPtr windowTitle)
         {
-            IntPtr hwnd = FindWindow(null, windowTitle);
-            CaptureWindow(hwnd);
-        }
-
-        static private void CaptureWindow(IntPtr handle)
-        {
-            // Get the size of the window to capture
-            Rectangle rect = new Rectangle();
-            GetWindowRect(handle, ref rect);
-
-            // GetWindowRect returns Top/Left and Bottom/Right, so fix it
-            rect.Width = rect.Width - rect.X;
-            rect.Height = rect.Height - rect.Y;
-
-            // Create a bitmap to draw the capture into
-            using (Bitmap bitmap = new Bitmap(rect.Width, rect.Height))
+            SetForegroundWindow(windowTitle);
+            Rectangle bounds = Screen.GetBounds(Point.Empty);
+            using (Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height))
             {
-                // Use PrintWindow to draw the window into our bitmap
                 using (Graphics g = Graphics.FromImage(bitmap))
                 {
-                    IntPtr hdc = g.GetHdc();
-                    if (!PrintWindow(handle, hdc, 0))
-                    {
-                        int error = Marshal.GetLastWin32Error();
-                        var exception = new System.ComponentModel.Win32Exception(error);
-                        Debug.WriteLine("ERROR: " + error + ": " + exception.Message);
-                        // TODO: Throw the exception?
-                    }
-                    g.ReleaseHdc(hdc);
+                    g.CopyFromScreen(Point.Empty, Point.Empty, bounds.Size);
                 }
-
-                // Save it as a .png just to demo this
-                bitmap.Save("Example.jpeg");
+                bitmap.Save("test.png", System.Drawing.Imaging.ImageFormat.Png);
             }
+        }
+
+        static IntPtr FindWindow(string title)
+        {
+            IntPtr hWnd = IntPtr.Zero;
+            foreach (var process in System.Diagnostics.Process.GetProcesses())
+            {
+                if (process.MainWindowTitle == title)
+                {
+                    hWnd = process.MainWindowHandle;
+                    break;
+                }
+            }
+            return hWnd;
+        }
+
+        static Bitmap CaptureWindow(IntPtr hWnd, RECT rect)
+        {
+            Bitmap screenshot = new Bitmap(rect.Right - rect.Left, rect.Bottom - rect.Top);
+            Graphics gfx = Graphics.FromImage(screenshot);
+            IntPtr hdcBitmap = gfx.GetHdc();
+
+            PrintWindow(hWnd, hdcBitmap, 0);
+
+            gfx.ReleaseHdc(hdcBitmap);
+            gfx.Dispose();
+
+            return screenshot;
         }
 
         public static Bitmap[] ScreenShotCutter(Bitmap screenshot)
@@ -138,5 +145,11 @@ namespace SquamaConsole
 
         [DllImport("user32.dll", SetLastError = true)]
         static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+        [DllImport("user32.dll")]
+        public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
     }
 }

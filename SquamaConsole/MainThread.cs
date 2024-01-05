@@ -45,7 +45,7 @@ namespace SquamaConsole
 
         public static void MainProgramThread()
         {
-            Screens.ScreenshotFull(windowTitle);
+            Screens.ScreenshotFull(hwnd);
 
             try
             {
