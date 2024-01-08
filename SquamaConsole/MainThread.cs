@@ -45,7 +45,7 @@ namespace SquamaConsole
 
         public static void MainProgramThread()
         {
-            Screens.ScreenshotFull(hwnd);
+            Screens.ScreenshotFull(hwnd); // TEST
 
             try
             {
@@ -172,7 +172,7 @@ namespace SquamaConsole
                     Console.WriteLine(Convert.ToInt32(inventoryText));
                 }
             }
-            catch (System.FormatException)
+            catch (System.FormatException) // Add a handler for images that fail to check for correct capacity
             {
                 errorsCounter++;
                 Console.WriteLine($"ERROR: {errorsCounter}");
