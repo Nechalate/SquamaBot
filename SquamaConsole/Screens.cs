@@ -61,7 +61,7 @@ namespace SquamaConsole
             }
             return hWnd;
         }
-
+        /*
         static Bitmap CaptureWindow(IntPtr hWnd, RECT rect)
         {
             Bitmap screenshot = new Bitmap(rect.Right - rect.Left, rect.Bottom - rect.Top);
@@ -75,7 +75,7 @@ namespace SquamaConsole
 
             return screenshot;
         }
-
+        */
         public static Bitmap[] ScreenShotCutter(Bitmap screenshot)
         {
             int[] sizes = { 0, 38, 63, 85, 106, 131, 156, screenshot.Width };
