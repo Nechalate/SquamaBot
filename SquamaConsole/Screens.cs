@@ -22,7 +22,7 @@ namespace SquamaConsole
         {
             using (var engine = new TesseractEngine(@"D:\PetProjects\Squama\traineddata", "eng", EngineMode.Default))
             {
-                engine.SetVariable("tessedit_char_whitelist", "0123456789");
+                engine.SetVariable("tessedit_char_whitelist", "0123456789"); // 0123456789
 
                 using (var image = PixConverter.ToPix(captchaImage))
                 {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -67,6 +68,7 @@ namespace SquamaConsole
                     var point3 = new System.Drawing.Point(912, 605);
 
                     var portPoint = new System.Drawing.Point(966, 495);
+                    //var shveikaPoint = new System.Drawing.Point(801, 501);
 
                     var fishHookingColor = ColorGetter.GetColorAtInWindow(windowTitle, point1);
                     var repeatFishingColor = ColorGetter.GetColorAtInWindow(windowTitle, point2);
@@ -91,19 +93,94 @@ namespace SquamaConsole
                         CatchTheCaptcha();
                     }
                     /*
+                    if (portColor.ToString() == "Color [A=255, R=126, G=211, B=33]") // X: 777, Y: 496, Color [A=255, R=126, G=211, B=33]
+                    {
+                        Image pngImageD = Image.FromFile(@"D:\PetProjects\Squama\numbers_chars_images\chars\D.png");
+                        Bitmap bitmapImageD = new Bitmap(pngImageD);
+
+                        Image pngImageA = Image.FromFile(@"D:\PetProjects\Squama\numbers_chars_images\chars\A.png");
+                        Bitmap bitmapImageA = new Bitmap(pngImageA);
+
+                        Image pngImageW = Image.FromFile(@"D:\PetProjects\Squama\numbers_chars_images\chars\W.png");
+                        Bitmap bitmapImageW = new Bitmap(pngImageW);
+
+                        Image pngImageS = Image.FromFile(@"D:\PetProjects\Squama\numbers_chars_images\chars\S.png");
+                        Bitmap bitmapImageS = new Bitmap(pngImageS);
+
+                        Image pngImage = Image.FromFile(@"D:\PetProjects\Squama\inventory_errors\10.png");
+                        Bitmap bitmapImage = new Bitmap(pngImage);
+
+                        Bitmap shveikaChar = ScreenshotsEffects.ColorReplace(Screens.CaptureScreenshotArea(940, 553, 48, 35)); // Area of inventory space 41 25 //45
+
+                        Thread.Sleep(500);
+
+                        if (AreBitmapsEqual(bitmapImage, shveikaChar))
+                        {
+                            Console.Beep();
+                            ButtonEmulation.PressTheButton(windowTitle, "D");
+                        }
+                        if (AreBitmapsEqual(bitmapImage, shveikaChar))
+                        {
+                            Console.Beep();
+                            ButtonEmulation.PressTheButton(windowTitle, "A");
+                        }
+                        if (AreBitmapsEqual(bitmapImage, shveikaChar))
+                        {
+                            Console.Beep();
+                            ButtonEmulation.PressTheButton(windowTitle, "W");
+                        }
+                        if (AreBitmapsEqual(bitmapImage, shveikaChar))
+                        {
+                            Console.Beep();
+                            ButtonEmulation.PressTheButton(windowTitle, "S");
+                        }
+
+                        Screens.SaveBitmaps(ScreenshotsEffects.ColorReplace(shveikaChar));
+
+                        Thread.Sleep(70);
+                    }
+                    */
+
+                    /*
                     if (portColor.ToString() == "Color [A=255, R=126, G=211, B=33]")
                     {
+                        Console.Beep();
                         Port();
                     }
                     */
 
-                    Thread.Sleep(70);
+                    //Console.WriteLine($"X: {point.pointX}, Y: {point.pointY}, {ColorGetter.GetColorAtInWindow(windowTitle, shveikaPoint)}");
+
+                    // ButtonEmulation.PressTheButton(windowTitle, "E");
+
+                    Thread.Sleep(70); // 70
                 }
             }
             catch (ThreadAbortException)
             {
                 Console.Write("Error");
             }
+        }
+
+        static bool AreBitmapsEqual(Bitmap bmp1, Bitmap bmp2)
+        {
+            if (bmp1.Size != bmp2.Size)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < bmp1.Width; i++)
+            {
+                for (int j = 0; j < bmp1.Height; j++)
+                {
+                    if (bmp1.GetPixel(i, j) != bmp2.GetPixel(i, j))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
 
         private static void Port() // Port work mini game
