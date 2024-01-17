@@ -262,10 +262,18 @@ namespace SquamaConsole
                 {
                     Console.WriteLine("Непредвиденная ошибка чтения. Начините или остановите рыбалку" +
                         " самостоятельно.");
+
+                    Thread.Sleep(550);
+                    LkmEmulation.FishHooking(windowTitle, 1492, 287); // Click the rod
+
+                    Thread.Sleep(350);
+                    LkmEmulation.FishHooking(windowTitle, 1492, 329); // Click the start fishing
+                    //Console.WriteLine(Convert.ToInt32(inventoryText));
+
                     errorsCounter = 0;
                     Console.Beep();
                     Screens.SaveBitmaps(ScreenshotsEffects.ColorReplace(inventorySpaceImage));
-                    TogglePause();
+                    //TogglePause();
                 }
             }
 
